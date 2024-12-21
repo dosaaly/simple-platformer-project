@@ -24,6 +24,14 @@ void move_player_horizontally(float delta) {
         player_pos.x = roundf(player_pos.x);
     }
 }
+void move_player_vertically(float delta) {
+    float next_y = player_pos.y + delta;
+    if (!is_colliding({player_pos.x, next_y}, WALL)) {
+        player_pos.y = next_y;
+    } else {
+        player_pos.y = roundf(player_pos.y);
+    }
+}
 
 void update_player() {
     player_pos.y += player_y_velocity;

@@ -108,14 +108,14 @@ struct Text {
 Text game_title = {
     "PLATFORMER",
     { 0.50f, 0.20f },
-    150.0f,
+    100.0f,
     RED
 };
 
 Text game_start_button = {
     "Press ENTER to start game",
     {0.50f, 0.50f},
-    50.0f,
+    25.0f,
     WHITE
 };
 Text shadow_start_button = {
@@ -128,15 +128,15 @@ Text shadow_start_button = {
 Text game_quit_button = {
     "Press Q to pause",
     {0.50f, 0.70f},
-    50.0f,
+    25.0f,
     WHITE
 };
 
 Text game_paused = {
-    "Press Escape to Resume",
+    "Press Enter to Resume",
 { 0.50f, 0.50f },
     50.0f,
-    RED
+    RAYWHITE
 };
 Text quit_in_pause_state = {
     "Press Q to Quit",
@@ -240,6 +240,7 @@ void unload_level();
 
 void spawn_player();
 void move_player_horizontally(float delta);
+void move_player_vertically(float delta);
 void update_player();
 
 // ASSETS_H

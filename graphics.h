@@ -106,6 +106,7 @@ void draw_player() {
 }
 
 void draw_pause_menu() {
+    ClearBackground(BLACK);
     draw_text(game_paused);
     draw_text(quit_in_pause_state);
 }

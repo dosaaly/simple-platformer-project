@@ -9,14 +9,18 @@
 
 void update_game() {
     game_frame++;
+
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
         move_player_horizontally(MOVEMENT_SPEED);
     }
-
+    if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
+        move_player_vertically(MOVEMENT_SPEED);
+    }if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
+        move_player_vertically(MOVEMENT_SPEED);
+    }
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
         move_player_horizontally(-MOVEMENT_SPEED);
     }
-
     // Calculating collisions to decide whether the player is allowed to jump: don't want them to suction cup to the ceiling or jump midair
     is_player_on_ground = is_colliding({player_pos.x, player_pos.y + 0.1f}, WALL);
     if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W) || IsKeyDown(KEY_SPACE)) && is_player_on_ground) {
@@ -86,9 +90,10 @@ void draw_game() {
                 break;
     }
 }
-
+const unsigned int wHeight = 480;
+const unsigned int wWidth = 1024;
 int main() {
-    InitWindow(1024, 480, "Platformer");
+    InitWindow(wWidth, wHeight, "Platformer");
 
     SetTargetFPS(60);
     load_fonts();
@@ -96,8 +101,15 @@ int main() {
     load_sounds();
     load_level();
 
+    Texture2D player = LoadTexture("data/images/player/player0.png");
+    float x_pos = wWidth/2 - player.width/2;
+    float y_pos = wHeight/2 - player.height/2;
+    float speed = 5;
+
+
     while (!WindowShouldClose()) {
         BeginDrawing();
+        DrawTexture(player,x_pos,y_pos,WHITE);
 
         update_game();
         draw_game();
