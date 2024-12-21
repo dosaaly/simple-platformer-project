@@ -41,11 +41,9 @@ void load_level(int offset) {
 
     if (level_index >= LEVEL_COUNT) {
         // TODO
-        if (level_index >= LEVEL_COUNT) {
-            game_state = VICTORY_STATE;
-            PlaySound(exit_sound);
-            return;
-        }
+        game_state = VICTORY_STATE;
+        create_victory_menu_background();
+        return;
     }
 
     size_t rows = LEVELS[level_index].rows;
@@ -66,6 +64,7 @@ void load_level(int offset) {
 
 void unload_level() {
     delete[] current_level_data;
+    current_level_data = nullptr;
 }
 
 #endif // LEVEL_H

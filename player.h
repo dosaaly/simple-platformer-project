@@ -1,6 +1,5 @@
 #ifndef PLAYER_H
 #define PLAYER_H
-
 #include "globals.h"
 
 void spawn_player() {
@@ -50,8 +49,17 @@ void update_player() {
     }
     if (is_colliding(player_pos, EXIT)) {
         // TODO
-
+        level_index++;
+        if (level_index < LEVEL_COUNT) {
+            load_level();
+            spawn_player();
+        } else {
+            game_state = VICTORY_STATE;
+            create_victory_menu_background();
+        }
+        PlaySound(exit_sound);
     }
 }
+
 
 #endif // PLAYER_H

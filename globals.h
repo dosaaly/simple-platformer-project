@@ -154,7 +154,9 @@ Text victory_title = {
 
 Text victory_subtitle = {
     "Press Enter to go back to menu",
-    { 0.50f, 0.65f }
+    { 0.50f, 0.65f },
+    25.0f,
+    WHITE
 };
 
 /* Images and Sprites */

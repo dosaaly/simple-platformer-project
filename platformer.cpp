@@ -1,3 +1,5 @@
+
+
 #include "raylib.h"
 
 #include "globals.h"
@@ -39,7 +41,8 @@ void update_game() {
     if (is_colliding(player_pos, EXIT)) {
         level_index++;
         if (level_index < LEVEL_COUNT) {
-            load_level(level_index);
+            load_level();
+            spawn_player();
         } else {
             game_state = VICTORY_STATE;
         }
@@ -103,9 +106,11 @@ int main() {
     load_level();
 
     Texture2D player = LoadTexture("data/images/player/player0.png");
+    Texture2D air_image = LoadTexture("data/images/player/air.png");
+    float x = wWidth/2 - air_image.width/2;
+    float y = wHeight/2 - air_image.height/2;
     float x_pos = wWidth/2 - player.width/2;
     float y_pos = wHeight/2 - player.height/2;
-    float speed = 5;
 
     PlayMusicStream(background_music);
     SetMusicVolume(background_music, 0.5f);
@@ -115,6 +120,8 @@ int main() {
 
         BeginDrawing();
         DrawTexture(player,x_pos,y_pos,WHITE);
+        DrawTexture(air_image,x,y,WHITE);
+
 
         update_game();
         draw_game();
