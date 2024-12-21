@@ -37,11 +37,28 @@ level LEVEL_1 = {
     LEVEL_1_DATA
 };
 
+char LEVEL_2_DATA[] = {
+    '#', '#', '#', '#', '#', '#', '#',
+    '#', '@', ' ', ' ', ' ', ' ', '#',
+    '#', '#', '#', '#', '#', ' ', '#',
+    '#', ' ', ' ', ' ', ' ', '*', '#',
+    '#', ' ', '#', '#', '#', '#', '#',
+    '#', ' ', ' ', ' ', ' ', ' ', '#',
+    '#', '#', '#', '#', '#', ' ', '#',
+    '#', 'E', ' ', ' ', ' ', '*', '#',
+    '#', '#', '#', '#', '#', '#', '#',
+
+};
+level LEVEL_2 = {
+    9, 7,
+    LEVEL_2_DATA
+};
 int level_index = 0;
-const int LEVEL_COUNT = 1;
+const int LEVEL_COUNT = 2;
 
 level LEVELS[LEVEL_COUNT] = {
-    LEVEL_1
+    LEVEL_1,
+    LEVEL_2
 };
 
 /* Loaded Level Data */
@@ -89,19 +106,43 @@ struct Text {
 };
 
 Text game_title = {
-    "Platformer",
-    { 0.50f, 0.50f },
-    100.0f,
+    "PLATFORMER",
+    { 0.50f, 0.20f },
+    150.0f,
     RED
 };
 
-Text game_subtitle = {
-    "Press Enter to Start",
-    { 0.50f, 0.65f }
+Text game_start_button = {
+    "Press ENTER to start game",
+    {0.50f, 0.50f},
+    50.0f,
+    WHITE
+};
+Text shadow_start_button = {
+    "Press ENTER to start game",
+    {0.295f, 0.70f},
+    1.0f,
+    RED
+};
+
+Text game_quit_button = {
+    "Press Q to pause",
+    {0.50f, 0.70f},
+    50.0f,
+    WHITE
 };
 
 Text game_paused = {
-    "Press Escape to Resume"
+    "Press Escape to Resume",
+{ 0.50f, 0.50f },
+    50.0f,
+    RED
+};
+Text quit_in_pause_state = {
+    "Press Q to Quit",
+    {0.5f, 0.65f},
+    50.0f,
+    RED
 };
 
 Text victory_title = {
@@ -117,7 +158,7 @@ Text victory_subtitle = {
 };
 
 /* Images and Sprites */
-
+Texture2D background;
 Texture2D wall_image;
 Texture2D air_image;
 Texture2D exit_image;
@@ -130,6 +171,7 @@ struct sprite {
     bool loop = true;
     size_t prev_game_frame = 0;
     Texture2D *frames = nullptr;
+    size_t game_frame = 0;
 };
 
 sprite coin_sprite;
@@ -163,10 +205,12 @@ size_t game_frame = 0;
 /* Game States */
 
 enum game_state {
-    GAME_STATE
-    // TODO
+    MENU_STATE,
+    GAME_STATE,
+    PAUSE_STATE,
+    VICTORY_STATE
 };
-game_state game_state = GAME_STATE;
+game_state game_state = MENU_STATE;
 
 /* Forward Declarations */
 

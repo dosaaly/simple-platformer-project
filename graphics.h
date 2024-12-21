@@ -1,6 +1,7 @@
 #ifndef GRAPHICS_H
 #define GRAPHICS_H
 
+#include "assets.h"
 #include "globals.h"
 
 void draw_text(Text &text) {
@@ -32,8 +33,11 @@ void derive_graphics_metrics_from_loaded_level() {
 }
 
 void draw_menu() {
+    draw_image(background, {500,0}, 550, 500);
     draw_text(game_title);
-    draw_text(game_subtitle);
+    draw_text(shadow_start_button);
+    draw_text(game_start_button);
+    draw_text(game_quit_button);;
 }
 
 void draw_game_overlay() {
@@ -103,6 +107,7 @@ void draw_player() {
 
 void draw_pause_menu() {
     draw_text(game_paused);
+    draw_text(quit_in_pause_state);
 }
 
 void create_victory_menu_background() {

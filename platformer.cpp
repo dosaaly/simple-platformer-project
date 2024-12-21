@@ -9,9 +9,6 @@
 
 void update_game() {
     game_frame++;
-
-    // TODO
-
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
         move_player_horizontally(MOVEMENT_SPEED);
     }
@@ -23,24 +20,77 @@ void update_game() {
     // Calculating collisions to decide whether the player is allowed to jump: don't want them to suction cup to the ceiling or jump midair
     is_player_on_ground = is_colliding({player_pos.x, player_pos.y + 0.1f}, WALL);
     if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W) || IsKeyDown(KEY_SPACE)) && is_player_on_ground) {
-        player_y_velocity = -JUMP_STRENGTH;
+        player_y_velocity = -JUMP_STRENGTH * 0.7;
     }
 
     update_player();
+    if (is_colliding(player_pos, COIN)) {
+        player_score++;
+        // Remove the coin from the level
+        get_collider(player_pos, COIN) = AIR;
+        PlaySound(coin_sound);
+    }
+
+    // Check for level exit
+    if (is_colliding(player_pos, EXIT)) {
+        level_index++;
+        if (level_index < LEVEL_COUNT) {
+            load_level(level_index);
+        } else {
+            game_state = VICTORY_STATE;
+        }
+        PlaySound(exit_sound);
+    }
 }
-
 void draw_game() {
-    // TODO
+    switch (game_state) {
+        case MENU_STATE:
+        ClearBackground(BLACK);
+        draw_menu();
+        if(IsKeyPressed(KEY_ENTER)) {
+            game_state = GAME_STATE;
+            load_level(level_index);
+        }
+        break;
 
-    ClearBackground(BLACK);
-    draw_level();
-    draw_game_overlay();
+        case GAME_STATE:{
+            ClearBackground(BLACK);
+            draw_level();
+            draw_game_overlay();
+            draw_player();
+            if(IsKeyDown(KEY_Q)) {
+                game_state = PAUSE_STATE;
+            }
+        }
+        break;
+
+        case PAUSE_STATE:
+            draw_pause_menu();
+            if (IsKeyPressed(KEY_ENTER)) {
+                game_state = GAME_STATE;
+                ClearBackground(BLACK);
+            }
+        if(IsKeyPressed(KEY_Q)) {
+            exit(0);
+        }
+        break;
+        case VICTORY_STATE:
+            draw_victory_menu();
+        if (IsKeyPressed(KEY_ENTER)) {
+            game_state = MENU_STATE;
+            level_index = 0;
+            player_score = 0;
+        }
+        break;
+        default:
+                break;
+    }
 }
 
 int main() {
     InitWindow(1024, 480, "Platformer");
-    SetTargetFPS(60);
 
+    SetTargetFPS(60);
     load_fonts();
     load_images();
     load_sounds();
@@ -54,7 +104,6 @@ int main() {
 
         EndDrawing();
     }
-
     unload_level();
     unload_sounds();
     unload_images();
