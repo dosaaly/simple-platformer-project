@@ -178,7 +178,7 @@ sprite coin_sprite;
 sprite player_sprite;
 
 /* Sounds */
-
+Music background_music;
 Sound coin_sound;
 Sound exit_sound;
 

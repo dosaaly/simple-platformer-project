@@ -94,6 +94,7 @@ const unsigned int wHeight = 480;
 const unsigned int wWidth = 1024;
 int main() {
     InitWindow(wWidth, wHeight, "Platformer");
+    InitAudioDevice();
 
     SetTargetFPS(60);
     load_fonts();
@@ -106,8 +107,12 @@ int main() {
     float y_pos = wHeight/2 - player.height/2;
     float speed = 5;
 
+    PlayMusicStream(background_music);
+    SetMusicVolume(background_music, 0.5f);
 
     while (!WindowShouldClose()) {
+        UpdateMusicStream(background_music);
+
         BeginDrawing();
         DrawTexture(player,x_pos,y_pos,WHITE);
 
@@ -121,6 +126,8 @@ int main() {
     unload_images();
     unload_fonts();
 
+    StopMusicStream(background_music);
+    UnloadMusicStream(background_music);
     CloseAudioDevice();
     CloseWindow();
 
