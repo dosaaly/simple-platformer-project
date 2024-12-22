@@ -12,16 +12,15 @@ void update_game() {
 
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
         move_player_horizontally(MOVEMENT_SPEED);
-        is_moving_right = true;
     }
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
         move_player_vertically(MOVEMENT_SPEED);
+        PlaySound(jump_sound);
     }if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
         move_player_vertically(MOVEMENT_SPEED);
     }
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
         move_player_horizontally(-MOVEMENT_SPEED);
-        is_moving_right = false;
     }
 
     // Calculating collisions to decide whether the player is allowed to jump: don't want them to suction cup to the ceiling or jump midair
@@ -41,13 +40,18 @@ void update_game() {
     // Check for level exit
     if (is_colliding(player_pos, EXIT)) {
         level_index++;
-        if (level_index < LEVEL_COUNT) {
+        if (level_index <= LEVEL_COUNT) {
             load_level();
             spawn_player();
         } else {
             game_state = VICTORY_STATE;
         }
         PlaySound(exit_sound);
+    }if (is_colliding(player_pos, SPIKE)) {
+        if (!death_sound_played) {
+            PlaySound(death_sound);
+            death_sound_played = true;
+        }game_state = GAME_OVER_STATE;
     }
 }
 void draw_game() {
@@ -90,14 +94,20 @@ void draw_game() {
             player_score = 0;
         }
         break;
+        case GAME_OVER_STATE:
+            draw_game_over_menu();
+        if (IsKeyPressed(KEY_ENTER)) {
+            game_state = MENU_STATE;
+            level_index = 0;
+            player_score = 0;
+        }
+        break;
         default:
                 break;
     }
 }
-const unsigned int wHeight = 480;
-const unsigned int wWidth = 1024;
 int main() {
-    InitWindow(wWidth, wHeight, "Platformer");
+    InitWindow(1024, 480, "Platformer");
     InitAudioDevice();
 
     SetTargetFPS(60);
@@ -106,22 +116,15 @@ int main() {
     load_sounds();
     load_level();
 
-    Texture2D player = LoadTexture("data/images/player/player0.png");
-    //Texture2D air_image = LoadTexture("data/images/player/air.png");
-    float x_pos = wWidth/2 - player.width/2;
-    float y_pos = wHeight/2 - player.height/2;
 
-    //PlayMusicStream(background_music);
-    //SetMusicVolume(background_music, 0.5f);
+
+    PlayMusicStream(background_music);
+    SetMusicVolume(background_music, 0.5f);
 
     while (!WindowShouldClose()) {
-        //UpdateMusicStream(background_music);
+        UpdateMusicStream(background_music);
 
         BeginDrawing();
-        DrawTexture(player,x_pos,y_pos,WHITE);
-        //DrawTexture(air_image,x,y,WHITE);
-
-
         update_game();
         draw_game();
 
@@ -132,8 +135,8 @@ int main() {
     unload_images();
     unload_fonts();
 
-    //StopMusicStream(background_music);
-    //UnloadMusicStream(background_music);
+    StopMusicStream(background_music);
+    UnloadMusicStream(background_music);
     CloseAudioDevice();
     CloseWindow();
 

@@ -6,6 +6,7 @@
 
 #include <string>
 #include <cassert>
+#include <iostream>
 
 void load_fonts() {
     menu_font = LoadFontEx("data/fonts/ARCADE_N.ttf", 256, nullptr, 128);
@@ -16,9 +17,9 @@ void unload_fonts() {
 }
 
 void load_images() {
-    spike_image   = LoadTexture("data/images/Spike.png");
+    spike_image   = LoadTexture("data/images/spike.png");
     wall_image    = LoadTexture("data/images/wall.png");
-    air_image     = LoadTexture("data/images/air.png");
+    //air_image     = LoadTexture("data/images/air.png");
     exit_image    = LoadTexture("data/images/exit.png");
     coin_sprite   = load_sprite("data/images/coin/coin",     ".png", 3, true, 18);
     player_sprite = load_sprite("data/images/player/player", ".png", 3, true, 10);
@@ -26,12 +27,11 @@ void load_images() {
 
 void unload_images() {
     UnloadTexture(wall_image);
-    UnloadTexture(air_image);
+    //UnloadTexture(air_image);
     UnloadTexture(exit_image);
+    UnloadTexture(spike_image);
     unload_sprite(player_sprite);
     unload_sprite(coin_sprite);
-    UnloadTexture(spike_image);
-
 }
 
 void draw_image(Texture2D image, Vector2 pos, float size) {
@@ -109,16 +109,24 @@ void draw_sprite(sprite &sprite, Vector2 pos, float width, float height) {
 
 void load_sounds() {
     InitAudioDevice();
+    death_sound = LoadSound("data/sounds/death.wav");
+    jump_sound = LoadSound("data/sounds/jump.wav");
     exit_sound = LoadSound("data/sounds/exit.wav");
-    //background_music = LoadMusicStream("data/sounds/music.mp3");
+    background_music = LoadMusicStream("data/sounds/music.mp3");
     coin_sound = LoadSound("data/sounds/coin.wav");
     exit_sound = LoadSound("data/sounds/exit.wav");
+
+    SetSoundVolume(jump_sound, 0.1f);
+    SetSoundVolume(death_sound, 0.5f);
+    SetMusicVolume(background_music, 0.3f);
 }
 
 void unload_sounds() {
+    UnloadSound(death_sound);
+    UnloadSound(jump_sound);
     UnloadSound(coin_sound);
     UnloadSound(exit_sound);
-    //UnloadMusicStream(background_music);
+    UnloadMusicStream(background_music);
 }
 
 #endif // IMAGES_H

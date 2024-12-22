@@ -69,16 +69,16 @@ void draw_level() {
             char cell = current_level.data[row * current_level.columns + column];
             // The first image layer
             switch (cell) {
-                case AIR:
                 case PLAYER:
                 case COIN:
-                case SPIKE:
-                    draw_image(spike_image, pos, cell_size);
-                case EXIT:
-                    draw_image(air_image, pos, cell_size);
+                //case AIR:
+                //    draw_image(air_image, pos, cell_size);
                     break;
                 case WALL:
                     draw_image(wall_image, pos, cell_size);
+                    break;
+                case SPIKE:
+                    draw_image(spike_image, pos, cell_size);
                     break;
             }
             // The second image layer
@@ -112,7 +112,11 @@ void draw_pause_menu() {
     draw_text(game_paused);
     draw_text(quit_in_pause_state);
 }
-
+void draw_game_over_menu() {
+    ClearBackground(BLACK);
+    draw_text(game_over);
+    draw_text(quit_in_game_over_state);
+}
 void create_victory_menu_background() {
     for (auto &ball : victory_balls) {
         ball.x  = rand_up_to(screen_size.x);

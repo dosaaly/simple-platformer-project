@@ -55,30 +55,30 @@ level LEVEL_2 = {
     LEVEL_2_DATA
 };
 char LEVEL_3_DATA[] = {
-    '#', '#', '#', '#', '#', '#', '#','#','#','#','#',
-    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
-    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
-    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
-    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
-    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
-    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
-    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
-    '#', '@', ' ', 'S', ' ', ' ', ' ',' ',' ','E','#',
-    '#', '#', '#', '#', '#', '#', '#','#','#','#','#',
+    '#','#', '#', '#', '#', '#', '#', '#','#', '#', '#', '#', '#', '#', '#','#','#',
+    '#',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ','#',
+    '#',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ','#',
+    '#',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ','#',
+    '#',' ', ' ', ' ', ' ', ' ', '*', '*', ' ', '*', '*', ' ', ' ', ' ',' ',' ','#',
+    '#',' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ','#',
+    '#',' ', ' ', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ', '#', ' ', ' ',' ',' ','#',
+    '#',' ', ' ', ' ', '#', '#', ' ', ' ', '#', ' ', ' ', '#', '#', ' ',' ',' ','#',
+    '#','@', ' ', '#', '#', '#', 'S', 'S', '#', 'S', 'S', '#', '#', '#',' ','E','#',
+    '#', '#', '#', '#', '#', '#', '#', '#','#', '#', '#', '#', '#', '#','#','#','#',
 };
 level LEVEL_3 = {
-    10, 10,
+    10,17,
     LEVEL_3_DATA
 };
 
 
-
-int level_index = 2;
+int level_index = 0;
 const int LEVEL_COUNT = 3;
 
 level LEVELS[LEVEL_COUNT] = {
     LEVEL_1,
-    LEVEL_2
+    LEVEL_2,
+    LEVEL_3,
 };
 
 /* Loaded Level Data */
@@ -95,8 +95,8 @@ const float MOVEMENT_SPEED = 0.1f;
 Vector2 player_pos;
 float player_y_velocity = 0;
 
+bool death_sound_played = false;
 bool is_player_on_ground;
-bool is_moving_right = true;
 int player_score = 0;
 
 /* Graphic Metrics */
@@ -151,7 +151,18 @@ Text game_quit_button = {
     25.0f,
     WHITE
 };
-
+Text game_over = {
+    "YOU DIED",
+    { 0.5f, 0.5f },
+    100.0f,
+    RED
+};
+Text quit_in_game_over_state = {
+    "Press Enter to go back to menu",
+    {0.5f, 0.65f},
+    25.0f,
+    RAYWHITE
+};
 Text game_paused = {
     "Press Enter to Resume",
 { 0.50f, 0.50f },
@@ -181,7 +192,7 @@ Text victory_subtitle = {
 /* Images and Sprites */
 Texture2D background;
 Texture2D wall_image;
-Texture2D air_image;
+//Texture2D air_image;
 Texture2D exit_image;
 Texture2D spike_image;
 
@@ -200,10 +211,11 @@ sprite coin_sprite;
 sprite player_sprite;
 
 /* Sounds */
-//Music background_music;
+Music background_music;
 Sound coin_sound;
 Sound exit_sound;
-
+Sound jump_sound;
+Sound death_sound;
 /* Victory Menu Background */
 
 struct victory_ball {
@@ -230,7 +242,8 @@ enum game_state {
     MENU_STATE,
     GAME_STATE,
     PAUSE_STATE,
-    VICTORY_STATE
+    VICTORY_STATE,
+    GAME_OVER_STATE
 };
 game_state game_state = MENU_STATE;
 
