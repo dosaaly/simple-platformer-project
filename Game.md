@@ -32,11 +32,11 @@ New Game Elements
 
 New Sounds
 =================
-*added 3 new sounds for 
-jumping, 
-colliding with an enemy, 
-and death;
-also added a background music for the game.*
+Added 3 new sounds for 
+*jumping, 
+*colliding with an enemy, 
+*dying;
+*also added a background music for the game.
 
 New Mechanics
 =================
