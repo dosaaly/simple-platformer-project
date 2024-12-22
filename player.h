@@ -14,7 +14,6 @@ void spawn_player() {
         }
     }
 }
-
 void move_player_horizontally(float delta) {
     float next_x = player_pos.x + delta;
     if (!is_colliding({next_x, player_pos.y}, WALL)) {
