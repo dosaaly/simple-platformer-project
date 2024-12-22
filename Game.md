@@ -1,12 +1,12 @@
 Core reqirements
 =================
-Title or Menu Screen:
+## Title or Menu Screen:
 ![Title Screen](https://imgur.com/9RIczSh.png)
-Game Screen:
+## Game Screen:
 ![Game Screen](https://imgur.com/QWfj19K.png)
-Pause Screen:
+## Pause Screen:
 ![Pause Screen](https://imgur.com/PY2BjpO.png)
-Victory Screen:
+## Victory Screen:
 ![Victory Screen](https://imgur.com/HtYM7bk.png)
 
 
@@ -19,6 +19,7 @@ New levels
 ![Level 4](https://imgur.com/dANEM11.png)
 ![Level 5](https://imgur.com/cQtaZ4P.png)
 ![Level 6](https://imgur.com/YZSFFfD.png)
+
 Game Over Screen
 =================
 ![Game Over Screen](https://imgur.com/shK77Ow.png)
@@ -32,13 +33,13 @@ New Game Elements
 
 New Sounds
 =================
-Added 3 new sounds for 
-*jumping, 
-*colliding with an enemy, 
-*dying;
+## Added 3 new sounds for 
+1. jumping, 
+2. colliding with an enemy, 
+3. dying;
 *also added a background music for the game.
 
 New Mechanics
 =================
-*added a double jump - the player can jump twice in the air.*
+## Added a double jump - the player can jump twice in the air.
 
