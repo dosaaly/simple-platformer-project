@@ -17,6 +17,7 @@ void unload_fonts() {
 }
 
 void load_images() {
+    slime_sprite  = load_sprite("data/images/slime/slime", ".png", 3, true, 18);
     spike_image   = LoadTexture("data/images/spike.png");
     wall_image    = LoadTexture("data/images/wall.png");
     //air_image     = LoadTexture("data/images/air.png");
@@ -32,6 +33,7 @@ void unload_images() {
     UnloadTexture(spike_image);
     unload_sprite(player_sprite);
     unload_sprite(coin_sprite);
+    unload_sprite(slime_sprite);
 }
 
 void draw_image(Texture2D image, Vector2 pos, float size) {
@@ -118,7 +120,7 @@ void load_sounds() {
 
     SetSoundVolume(jump_sound, 0.1f);
     SetSoundVolume(death_sound, 0.5f);
-    SetMusicVolume(background_music, 0.3f);
+    SetMusicVolume(background_music, 0.1f);
 }
 
 void unload_sounds() {

@@ -48,10 +48,9 @@ void update_game() {
         }
         PlaySound(exit_sound);
     }if (is_colliding(player_pos, SPIKE)) {
-        if (!death_sound_played) {
-            PlaySound(death_sound);
-            death_sound_played = true;
-        }game_state = GAME_OVER_STATE;
+        PlaySound(death_sound);
+        game_state = GAME_OVER_STATE;
+        player_dead = true;
     }
 }
 void draw_game() {
@@ -62,6 +61,8 @@ void draw_game() {
         if(IsKeyPressed(KEY_ENTER)) {
             game_state = GAME_STATE;
             load_level(level_index);
+            player_dead = false;
+            spawn_player();
         }
         break;
 
@@ -69,7 +70,9 @@ void draw_game() {
             ClearBackground(BLACK);
             draw_level();
             draw_game_overlay();
-            draw_player();
+            if (!player_dead) {
+                draw_player();
+            }
             if(IsKeyDown(KEY_Q)) {
                 game_state = PAUSE_STATE;
             }
@@ -100,6 +103,8 @@ void draw_game() {
             game_state = MENU_STATE;
             level_index = 0;
             player_score = 0;
+            player_dead = false;
+            spawn_player();
         }
         break;
         default:
@@ -107,7 +112,7 @@ void draw_game() {
     }
 }
 int main() {
-    InitWindow(1024, 480, "Platformer");
+    InitWindow(1280, 720, "Platformer");
     InitAudioDevice();
 
     SetTargetFPS(60);

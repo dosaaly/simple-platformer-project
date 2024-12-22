@@ -72,7 +72,9 @@ void draw_level() {
                 case PLAYER:
                 case COIN:
                 //case AIR:
-                //    draw_image(air_image, pos, cell_size);
+                //     draw_image(air_image, pos, cell_size);
+                //    break;
+                case SLIME:
                     break;
                 case WALL:
                     draw_image(wall_image, pos, cell_size);
@@ -85,6 +87,9 @@ void draw_level() {
             switch (cell) {
                 case COIN:
                     draw_sprite(coin_sprite, pos, cell_size);
+                    break;
+                case SLIME:
+                    draw_sprite(slime_sprite, pos, cell_size);
                     break;
                 case EXIT:
                     draw_image(exit_image, pos, cell_size);
