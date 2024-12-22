@@ -52,6 +52,14 @@ void update_game() {
         game_state = GAME_OVER_STATE;
         player_dead = true;
     }
+    if (is_colliding(player_pos, SLIME)) {
+        if (!slime_collision_sound_played) {
+            PlaySound(hurt_sound);
+            slime_collision_sound_played = true;
+        }
+        game_state = GAME_OVER_STATE;
+        player_dead = true;
+    }
 }
 void draw_game() {
     switch (game_state) {
@@ -104,6 +112,7 @@ void draw_game() {
             level_index = 0;
             player_score = 0;
             player_dead = false;
+            slime_collision_sound_played = false;
             spawn_player();
         }
         break;

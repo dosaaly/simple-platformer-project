@@ -111,6 +111,7 @@ void draw_sprite(sprite &sprite, Vector2 pos, float width, float height) {
 
 void load_sounds() {
     InitAudioDevice();
+    hurt_sound = LoadSound("data/sounds/hurt.wav");
     death_sound = LoadSound("data/sounds/death.wav");
     jump_sound = LoadSound("data/sounds/jump.wav");
     exit_sound = LoadSound("data/sounds/exit.wav");
@@ -124,6 +125,7 @@ void load_sounds() {
 }
 
 void unload_sounds() {
+    UnloadSound(hurt_sound);
     UnloadSound(death_sound);
     UnloadSound(jump_sound);
     UnloadSound(coin_sound);
