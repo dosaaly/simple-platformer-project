@@ -56,7 +56,6 @@ void draw_game_overlay() {
     draw_text(score_shadow);
     draw_text(score);
 }
-
 void draw_level() {
     for (size_t row = 0; row < current_level.rows; ++row) {
         for (size_t column = 0; column < current_level.columns; ++column) {
@@ -82,6 +81,12 @@ void draw_level() {
                 case SPIKE:
                     draw_image(spike_image, pos, cell_size);
                     break;
+                case SPIKE1:
+                    draw_image(spike1_image, pos, cell_size);
+                    break;
+                case ROCK:
+                    draw_image(rock_image, pos, cell_size);
+                break;
             }
             // The second image layer
             switch (cell) {

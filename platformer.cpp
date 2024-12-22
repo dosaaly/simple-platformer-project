@@ -15,8 +15,13 @@ void update_game() {
     }
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
         move_player_vertically(MOVEMENT_SPEED);
-        PlaySound(jump_sound);
-    }if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
+        if (jump_count < MAX_JUMPS) {
+            player_y_velocity = -JUMP_STRENGTH * 0.7;
+            jump_count++;
+            PlaySound(jump_sound);
+        }
+    }
+    if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
         move_player_vertically(MOVEMENT_SPEED);
     }
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
@@ -25,8 +30,13 @@ void update_game() {
 
     // Calculating collisions to decide whether the player is allowed to jump: don't want them to suction cup to the ceiling or jump midair
     is_player_on_ground = is_colliding({player_pos.x, player_pos.y + 0.1f}, WALL);
+    if (is_player_on_ground) {
+        player_y_velocity = 0;
+        player_pos.y = roundf(player_pos.y);
+        jump_count = 0; // reset jump count when on the ground
+    }
     if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W) || IsKeyDown(KEY_SPACE)) && is_player_on_ground) {
-        player_y_velocity = -JUMP_STRENGTH * 0.7;
+        player_y_velocity = -JUMP_STRENGTH * 0.5;
     }
 
     update_player();
@@ -51,6 +61,10 @@ void update_game() {
         PlaySound(death_sound);
         game_state = GAME_OVER_STATE;
         player_dead = true;
+    }if (is_colliding(player_pos, SPIKE1)) {
+        PlaySound(death_sound);
+        game_state = GAME_OVER_STATE;
+        player_dead = true;
     }
     if (is_colliding(player_pos, SLIME)) {
         if (!slime_collision_sound_played) {
@@ -59,6 +73,12 @@ void update_game() {
         }
         game_state = GAME_OVER_STATE;
         player_dead = true;
+    }
+    if (is_colliding(player_pos, ROCK)) {
+        if (!rock_collision_sound_played) {
+            PlaySound(hurt_sound);
+            rock_collision_sound_played = true;
+        }
     }
 }
 void draw_game() {

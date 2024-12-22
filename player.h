@@ -30,7 +30,6 @@ void move_player_vertically(float delta) {
         player_pos.y = roundf(player_pos.y);
     }
 }
-
 void update_player() {
     player_pos.y += player_y_velocity;
     player_y_velocity += GRAVITY_FORCE;
@@ -39,6 +38,7 @@ void update_player() {
     if (is_player_on_ground) {
         player_y_velocity = 0;
         player_pos.y = roundf(player_pos.y);
+        jump_count = 0; // reset jump count when on the ground
     }
 
     if (is_colliding(player_pos, COIN)) {

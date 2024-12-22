@@ -19,6 +19,8 @@ void unload_fonts() {
 void load_images() {
     slime_sprite  = load_sprite("data/images/slime/slime", ".png", 3, true, 18);
     spike_image   = LoadTexture("data/images/spike.png");
+    spike1_image  = LoadTexture("data/images/spike1.png");
+    rock_image    = LoadTexture("data/images/rock.png");
     wall_image    = LoadTexture("data/images/wall.png");
     //air_image     = LoadTexture("data/images/air.png");
     exit_image    = LoadTexture("data/images/exit.png");
@@ -27,6 +29,8 @@ void load_images() {
 }
 
 void unload_images() {
+    UnloadTexture(spike1_image);
+    UnloadTexture(rock_image);
     UnloadTexture(wall_image);
     //UnloadTexture(air_image);
     UnloadTexture(exit_image);

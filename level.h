@@ -61,7 +61,6 @@ void load_level(int offset) {
     spawn_player();
     derive_graphics_metrics_from_loaded_level();
 }
-
 void unload_level() {
     delete[] current_level_data;
     current_level_data = nullptr;
