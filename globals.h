@@ -14,6 +14,7 @@ const char AIR    = ' ';
 const char PLAYER = '@';
 const char COIN   = '*';
 const char EXIT   = 'E';
+const char SPIKE  = 'S';
 
 /* Levels */
 
@@ -53,8 +54,27 @@ level LEVEL_2 = {
     9, 7,
     LEVEL_2_DATA
 };
-int level_index = 0;
-const int LEVEL_COUNT = 2;
+char LEVEL_3_DATA[] = {
+    '#', '#', '#', '#', '#', '#', '#','#','#','#','#',
+    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
+    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
+    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
+    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
+    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
+    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
+    '#', ' ', ' ', ' ', ' ', ' ', ' ',' ',' ',' ','#',
+    '#', '@', ' ', 'S', ' ', ' ', ' ',' ',' ','E','#',
+    '#', '#', '#', '#', '#', '#', '#','#','#','#','#',
+};
+level LEVEL_3 = {
+    10, 10,
+    LEVEL_3_DATA
+};
+
+
+
+int level_index = 2;
+const int LEVEL_COUNT = 3;
 
 level LEVELS[LEVEL_COUNT] = {
     LEVEL_1,
@@ -76,7 +96,7 @@ Vector2 player_pos;
 float player_y_velocity = 0;
 
 bool is_player_on_ground;
-
+bool is_moving_right = true;
 int player_score = 0;
 
 /* Graphic Metrics */
@@ -151,7 +171,6 @@ Text victory_title = {
     100.0f,
     RED
 };
-
 Text victory_subtitle = {
     "Press Enter to go back to menu",
     { 0.50f, 0.65f },
@@ -164,6 +183,7 @@ Texture2D background;
 Texture2D wall_image;
 Texture2D air_image;
 Texture2D exit_image;
+Texture2D spike_image;
 
 struct sprite {
     size_t frame_count    = 0;
@@ -180,7 +200,7 @@ sprite coin_sprite;
 sprite player_sprite;
 
 /* Sounds */
-Music background_music;
+//Music background_music;
 Sound coin_sound;
 Sound exit_sound;
 

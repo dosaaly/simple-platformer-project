@@ -72,6 +72,8 @@ void draw_level() {
                 case AIR:
                 case PLAYER:
                 case COIN:
+                case SPIKE:
+                    draw_image(spike_image, pos, cell_size);
                 case EXIT:
                     draw_image(air_image, pos, cell_size);
                     break;

@@ -1,5 +1,3 @@
-
-
 #include "raylib.h"
 
 #include "globals.h"
@@ -14,6 +12,7 @@ void update_game() {
 
     if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
         move_player_horizontally(MOVEMENT_SPEED);
+        is_moving_right = true;
     }
     if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
         move_player_vertically(MOVEMENT_SPEED);
@@ -22,7 +21,9 @@ void update_game() {
     }
     if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
         move_player_horizontally(-MOVEMENT_SPEED);
+        is_moving_right = false;
     }
+
     // Calculating collisions to decide whether the player is allowed to jump: don't want them to suction cup to the ceiling or jump midair
     is_player_on_ground = is_colliding({player_pos.x, player_pos.y + 0.1f}, WALL);
     if ((IsKeyDown(KEY_UP) || IsKeyDown(KEY_W) || IsKeyDown(KEY_SPACE)) && is_player_on_ground) {
@@ -106,21 +107,19 @@ int main() {
     load_level();
 
     Texture2D player = LoadTexture("data/images/player/player0.png");
-    Texture2D air_image = LoadTexture("data/images/player/air.png");
-    float x = wWidth/2 - air_image.width/2;
-    float y = wHeight/2 - air_image.height/2;
+    //Texture2D air_image = LoadTexture("data/images/player/air.png");
     float x_pos = wWidth/2 - player.width/2;
     float y_pos = wHeight/2 - player.height/2;
 
-    PlayMusicStream(background_music);
-    SetMusicVolume(background_music, 0.5f);
+    //PlayMusicStream(background_music);
+    //SetMusicVolume(background_music, 0.5f);
 
     while (!WindowShouldClose()) {
-        UpdateMusicStream(background_music);
+        //UpdateMusicStream(background_music);
 
         BeginDrawing();
         DrawTexture(player,x_pos,y_pos,WHITE);
-        DrawTexture(air_image,x,y,WHITE);
+        //DrawTexture(air_image,x,y,WHITE);
 
 
         update_game();
@@ -133,8 +132,8 @@ int main() {
     unload_images();
     unload_fonts();
 
-    StopMusicStream(background_music);
-    UnloadMusicStream(background_music);
+    //StopMusicStream(background_music);
+    //UnloadMusicStream(background_music);
     CloseAudioDevice();
     CloseWindow();
 

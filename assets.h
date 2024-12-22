@@ -16,6 +16,7 @@ void unload_fonts() {
 }
 
 void load_images() {
+    spike_image   = LoadTexture("data/images/Spike.png");
     wall_image    = LoadTexture("data/images/wall.png");
     air_image     = LoadTexture("data/images/air.png");
     exit_image    = LoadTexture("data/images/exit.png");
@@ -29,6 +30,8 @@ void unload_images() {
     UnloadTexture(exit_image);
     unload_sprite(player_sprite);
     unload_sprite(coin_sprite);
+    UnloadTexture(spike_image);
+
 }
 
 void draw_image(Texture2D image, Vector2 pos, float size) {
@@ -107,7 +110,7 @@ void draw_sprite(sprite &sprite, Vector2 pos, float width, float height) {
 void load_sounds() {
     InitAudioDevice();
     exit_sound = LoadSound("data/sounds/exit.wav");
-    background_music = LoadMusicStream("data/sounds/music.mp3");
+    //background_music = LoadMusicStream("data/sounds/music.mp3");
     coin_sound = LoadSound("data/sounds/coin.wav");
     exit_sound = LoadSound("data/sounds/exit.wav");
 }
@@ -115,7 +118,7 @@ void load_sounds() {
 void unload_sounds() {
     UnloadSound(coin_sound);
     UnloadSound(exit_sound);
-    UnloadMusicStream(background_music);
+    //UnloadMusicStream(background_music);
 }
 
 #endif // IMAGES_H
