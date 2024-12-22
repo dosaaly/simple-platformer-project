@@ -15,7 +15,7 @@ Core reqirements
 New levels
 =================
 ![Level 2](https://imgur.com/59pcd7q.png)
-![Level 3](https://imgur.com/undefined.png)
+![Level 3](https://imgur.com/guSYaUK.png)
 ![Level 4](https://imgur.com/dANEM11.png)
 ![Level 5](https://imgur.com/cQtaZ4P.png)
 ![Level 6](https://imgur.com/YZSFFfD.png)
