@@ -37,7 +37,7 @@ New Sounds
 1. jumping, 
 2. colliding with an enemy, 
 3. dying;
-*also added a background music for the game.
+4. also added a background music for the game.
 
 New Mechanics
 =================
