@@ -42,4 +42,5 @@ New Sounds
 New Mechanics
 =================
 ## Added a double jump - the player can jump twice in the air.
+![GIF](https://github.com/user-attachments/assets/c7633f72-d460-455d-bd46-2afb3fdad739)
 
